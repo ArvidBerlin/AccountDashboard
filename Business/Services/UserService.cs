@@ -21,6 +21,15 @@ public class UserService(IUserRepository userRepository, UserManager<UserEntity>
         return result.MapTo<UserResult>();
     }
 
+    public async Task<UserResult> UserExistsByEmailAsync(string email)
+    {
+        var existsResult = await _userRepository.ExistsAsync(x => x.Email == email);
+        if (existsResult.Succeeded)
+            return new UserResult { Succeeded = true, StatusCode = 200, Error = "A user with the specified email address exists." };
+
+        return new UserResult { Succeeded = false, StatusCode = 404, Error = "User was not found." };
+    }
+
     public async Task<UserResult> AddUserToRoleAsync(string userId, string roleName)
     {
         if (!await _roleManager.RoleExistsAsync(roleName))
@@ -65,5 +74,14 @@ public class UserService(IUserRepository userRepository, UserManager<UserEntity>
             Debug.WriteLine(ex.Message);
             return new UserResult { Succeeded = false, StatusCode = 500, Error = ex.Message };
         }
+    }
+
+    public async Task<string> GetDisplayName(string userId)
+    {
+        if (string.IsNullOrEmpty(userId))
+            return "";
+
+        var user = await _userManager.FindByIdAsync(userId);
+        return user == null ? "" : $"{user.FirstName} {user.LastName}";
     }
 }

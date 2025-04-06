@@ -11,11 +11,13 @@ public class ProjectEntity
     public string ProjectName { get; set; } = null!;
     public string? Description { get; set; }
 
-    [Column(TypeName = "Date")]
+    [Column(TypeName = "date")]
     public DateTime StartDate { get; set; }
 
-    [Column(TypeName = "Date")]
+    [Column(TypeName = "date")]
     public DateTime? EndDate { get; set; }
+
+    [Column(TypeName = "money")]
     public decimal? Budget { get; set; }
     public DateTime Created { get; set; } = DateTime.Now;
 
@@ -30,6 +32,4 @@ public class ProjectEntity
     [ForeignKey(nameof(Status))]
     public int StatusId { get; set; }
     public virtual StatusEntity Status { get; set; } = null!;
-
-    // Lägga till Member
 }
