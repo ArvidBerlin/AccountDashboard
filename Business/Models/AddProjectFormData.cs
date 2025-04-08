@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Domain.Models;
+namespace Business.Models;
 
 public class AddProjectFormData
 {

@@ -1,5 +1,6 @@
 ﻿using Business.Models;
 using Domain.Models;
+using Domain.Responses;
 
 namespace Business.Interfaces
 {

@@ -1,7 +1,8 @@
-﻿namespace Business.Models;
+﻿namespace Domain.Responses;
 
 public class AuthResult : ServiceResult
 {
+    public string? SuccessMessage { get; set; }
 }
 
 public class AuthResult<T> : ServiceResult

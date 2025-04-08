@@ -1,4 +1,6 @@
 ﻿using Data.Entities;
+using Domain.Models;
+using Domain.Responses;
 
 namespace Data.Interfaces;
 

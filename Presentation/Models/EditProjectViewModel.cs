@@ -1,45 +1,47 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.Models;
 
 public class EditProjectViewModel
 {
-    [DataType(DataType.ImageUrl)]
-    public string? Image { get; set; }
+    [Required]
+    public string Id { get; set; } = null!;
 
-    [Required(ErrorMessage = "is required")]
-    [Display(Name = "Project Name", Prompt = "Edit project name")]
-    [DataType(DataType.Text)]
-    public string ProjectName { get; set; } = null!;
-
-    [Required(ErrorMessage = "is required")]
-    [Display(Name = "Client Name", Prompt = "Edit client name")]
-    [DataType(DataType.Text)]
-    public string ClientName { get; set; } = null!;
-
-    [Display(Name = "Description", Prompt = "Edit description")]
-    [DataType(DataType.MultilineText)]
-    public string? Description { get; set; }
-
-    [Required(ErrorMessage = "is required")]
-    [Display(Name = "Start Date", Prompt = "Change start date")]
-    [DataType(DataType.Date)]
-    public DateTime StartDate { get; set; }
-
-    [Display(Name = "End Date", Prompt = "Change end date")]
-    [DataType(DataType.Date)]
-    public DateTime? EndDate { get; set; }
+    [DataType(DataType.Upload)]
+    [Display(Name = "Project Image", Prompt = "Select project image")]
+    public IFormFile? Image { get; set; }
+    public string? ImageUrl { get; set; }
 
     [Required]
-    [Display(Name = "Members", Prompt = "Edit project memmbers")]
     [DataType(DataType.Text)]
-    public string Members { get; set; } = null!;
+    [Display(Name = "Project Name", Prompt = "Enter project name")]
+    public string ProjectName { get; set; } = null!;
 
-    [Display(Name = "Budget", Prompt = "0")]
+    [DataType(DataType.Text)]
+    [Display(Name = "Description", Prompt = "Type something")]
+    public string? Description { get; set; }
+
+    [DataType(DataType.Date)]
+    [Display(Name = "Start Date", Prompt = "Enter start date")]
+    public DateTime? StartDate { get; set; }
+
+    [DataType(DataType.Date)]
+    [Display(Name = "End Date", Prompt = "Enter end date")]
+    public DateTime? EndDate { get; set; }
+
     [DataType(DataType.Currency)]
+    [Display(Name = "Budget", Prompt = "Enter budget")]
     public decimal? Budget { get; set; }
 
+    [Required]
+    [Display(Name = "Client", Prompt = "Select client")]
     public string ClientId { get; set; } = null!;
-    public string UserId { get; set; } = null!;
+
+    [Required]
+    [Display(Name = "Status", Prompt = "Select status")]
     public int StatusId { get; set; }
+
+    public IEnumerable<SelectListItem> Clients { get; set; } = [];
+    public IEnumerable<SelectListItem> Statuses { get; set; } = [];
 }

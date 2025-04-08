@@ -4,12 +4,14 @@ using Data.Contexts;
 using Data.Entities;
 using Data.Interfaces;
 using Data.Repositories;
+using Hubs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
 builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
@@ -31,12 +33,17 @@ builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+builder.Services.AddScoped<INotificationTypeRepository, NotificationTypeRepository>();
+builder.Services.AddScoped<INotificationTargetRepository, NotificationTargetRepository>();
+builder.Services.AddScoped<IUserDismissedNotificationRepository, UserDismissedNotificationRepository>();
 
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IStatusService, StatusService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
 
 var app = builder.Build();
 app.UseHsts();
@@ -54,5 +61,6 @@ app.MapControllerRoute(
     pattern: "{controller=Overview}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

@@ -1,7 +1,7 @@
 ﻿using Data.Contexts;
 using Data.Interfaces;
-using Data.Models;
 using Domain.Extensions;
+using Domain.Responses;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Linq.Expressions;
@@ -37,7 +37,7 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
         }
     }
 
-    public virtual async Task<RepositoryResult<IEnumerable<TModel>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<RepositoryResult<IEnumerable<TModel>>> GetAllAsync(bool orderByDescending = false, Expression<Func<TEntity, object>>? sortBy = null, Expression<Func<TEntity, bool>>? where = null, int take = 0, params Expression<Func<TEntity, object>>[] includes)
     {
         IQueryable<TEntity> query = _table;
 
@@ -52,6 +52,9 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
             query = orderByDescending
                 ? query.OrderByDescending(sortBy)
                 : query.OrderBy(sortBy);
+
+        if (take > 0)
+            query = query.Take(take);
 
         var entities = await query.ToListAsync();
         var result = entities.Select(entity => entity.MapTo<TModel>());

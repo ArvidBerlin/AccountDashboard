@@ -1,4 +1,4 @@
-﻿namespace Domain.Models;
+﻿namespace Business.Models;
 
 public class SignInFormData
 {

@@ -1,4 +1,4 @@
-﻿namespace Business.Models;
+﻿namespace Domain.Responses;
 
 public class StatusResult<T> : ServiceResult
 {

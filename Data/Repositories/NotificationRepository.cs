@@ -2,6 +2,8 @@
 using Data.Entities;
 using Data.Interfaces;
 using Domain.Extensions;
+using Domain.Models;
+using Domain.Responses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories;

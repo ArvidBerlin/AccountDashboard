@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Hubs\Hubs.csproj" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ using Data.Entities;
 using Data.Interfaces;
 using Domain.Extensions;
 using Domain.Models;
+using Domain.Responses;
 
 namespace Business.Services;
 
@@ -37,6 +38,7 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
                 orderByDescending: true,
                 sortBy: s => s.Created,
                 where: null,
+                take: 0,
                 include => include.User,
                 include => include.Status,
                 include => include.Client

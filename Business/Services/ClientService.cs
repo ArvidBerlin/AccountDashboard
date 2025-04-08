@@ -1,8 +1,8 @@
 ﻿using Business.Interfaces;
-using Business.Models;
 using Data.Interfaces;
 using Domain.Extensions;
 using Domain.Models;
+using Domain.Responses;
 
 namespace Business.Services;
 

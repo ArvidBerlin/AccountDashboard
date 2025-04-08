@@ -4,6 +4,7 @@ using Data.Entities;
 using Data.Interfaces;
 using Domain.Extensions;
 using Domain.Models;
+using Domain.Responses;
 using Microsoft.AspNetCore.Identity;
 using System.Diagnostics;
 
@@ -15,10 +16,30 @@ public class UserService(IUserRepository userRepository, UserManager<UserEntity>
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
 
-    public async Task<UserResult> GetUsersAsync()
+    public async Task<UserResult<IEnumerable<User>>> GetUsersAsync()
     {
-        var result = await _userRepository.GetAllAsync();
-        return result.MapTo<UserResult>();
+        var repositoryResult = await _userRepository.GetAllAsync
+            (
+                orderByDescending: false,
+                sortBy: x => x.FirstName!
+            );
+
+        var entites = repositoryResult.Result;
+        var users = entites?.Select(x => x.MapTo<User>()) ?? [];
+
+        return new UserResult<IEnumerable<User>> { Succeeded = true, StatusCode = 200, Result = users };
+    }
+
+    public async Task<UserResult<User>> GetUserByIdAsync(string id)
+    {
+        var repositoryResult = await _userRepository.GetAsync(x => x.Id == id);
+
+        var entity = repositoryResult.Result;
+        if (entity == null)
+            return new UserResult<User> { Succeeded = false, StatusCode = 404, Error = $"User with id '{id}' was not found." };
+
+        var user = entity.MapTo<User>();
+        return new UserResult<User> { Succeeded = true, StatusCode = 200, Result = user };
     }
 
     public async Task<UserResult> UserExistsByEmailAsync(string email)
