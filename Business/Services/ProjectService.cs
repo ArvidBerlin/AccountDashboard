@@ -8,10 +8,20 @@ using Domain.Responses;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository, IStatusService statusService) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IStatusService statusService, ILocalImageHandler imageHandler) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IStatusService _statusService = statusService;
+    private readonly ILocalImageHandler _imageHandler = imageHandler;
+
+
+    /* 
+     Skriv in ImageHandler nånstans inuti CreateProjectAsync:
+     
+     var imageFileName = await _imageHandler.SaveProjectImageAsync(formData.Image!);
+
+    */
+
 
     public async Task<ProjectResult> CreateProjectAsync(AddProjectFormData formData)
     {
@@ -102,7 +112,9 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         if (!projectResponse.Succeeded)
             return new ProjectResult { Succeeded = false, StatusCode = 404, Error = $"Project '{id}' was not found." };
 
-        var deleteResult = await _projectRepository.DeleteAsync(projectResponse.Result);
+        var project = projectResponse.Result!.MapTo<ProjectEntity>();
+
+        var deleteResult = await _projectRepository.DeleteAsync(project);
         return deleteResult.Succeeded
             ? new ProjectResult { Succeeded = true, StatusCode = 200 }
             : new ProjectResult { Succeeded = false, StatusCode = deleteResult.StatusCode, Error = deleteResult.Error };

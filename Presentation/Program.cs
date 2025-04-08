@@ -1,3 +1,4 @@
+using Business.Handlers;
 using Business.Interfaces;
 using Business.Services;
 using Data.Contexts;
@@ -13,6 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
+//builder.Services.AddScoped<IImageHandler, ImageHandler>();  -- Behövs möjligen inte
+if (builder.Environment.IsDevelopment())
+{
+    var localPath = Path.Combine(builder.Environment.WebRootPath, "images", "uploads");
+    builder.Services.AddScoped<ILocalImageHandler>(_ => new LocalImageHandler(localPath));
+}
+else
+{
+    builder.Services.AddScoped<IAzureImageHandler, AzureImageHandler>();
+}
+
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
 builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
 {
@@ -25,7 +37,7 @@ builder.Services.ConfigureApplicationCookie(x =>
     x.AccessDeniedPath = "/auth/denied";
     x.Cookie.HttpOnly = true;
     x.Cookie.IsEssential = true;
-    x.ExpireTimeSpan = TimeSpan.FromHours(1);
+    x.ExpireTimeSpan = TimeSpan.FromMinutes(30);
     x.SlidingExpiration = true;
 });
 
