@@ -137,3 +137,30 @@ function updateRelativeTimes() {
         el.textContent = relativeTime;
     });
 }
+
+$(document).ready(function() {
+    $(document).on('click', '.dropdown-action[data-type="modal"]', function(e) {
+        e.preventDefault();
+
+        var projectContainer = $(this).closest('.project');
+        var projectId = projectContainer.data('project-id');
+
+        if (!projectId) {
+            console.error('Project ID not found');
+            return;
+        }
+
+        $.ajax({
+            url: '/Project/Update',
+            type: 'GET',
+            data: { id: projectId },
+            success: function (response) {
+                $('#editProjectModal .modal-content').html(response);
+                $('#editProjectModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching project details: ', error);
+            }
+        });
+    });
+});

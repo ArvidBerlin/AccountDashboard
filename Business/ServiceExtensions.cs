@@ -15,7 +15,7 @@ public static class ServiceExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IProjectService, ProjectService>();
         services.AddScoped<INotificationService, NotificationService>();
-        
+
         return services;
     }
 }

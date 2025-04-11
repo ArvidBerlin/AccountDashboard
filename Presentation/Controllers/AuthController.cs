@@ -26,8 +26,6 @@ public class AuthController(IAuthService authService, INotificationService notif
     [Route("auth/signup")]
     public async Task<IActionResult> SignUp(SignUpViewModel viewModel, string returnUrl = "~/")
     {
-        ViewBag.ErrorMessage = null;
-
         if (!ModelState.IsValid)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -39,7 +37,7 @@ public class AuthController(IAuthService authService, INotificationService notif
         var result = await _authService.SignUpAsync(signUpFormData);
         if (result.Succeeded)
         {
-            return RedirectToAction(returnUrl);
+            return LocalRedirect(returnUrl);
         }
 
         ViewBag.ReturnUrl = returnUrl;

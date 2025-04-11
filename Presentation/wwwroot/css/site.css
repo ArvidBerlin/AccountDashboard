@@ -6,6 +6,10 @@
 /*  CSS-variabler & inställningar */
 /* ============================= */
 :root {
+    /* Properties */
+    --border-radius: 12px;
+    --border-radius-bottom: 0 0 12px 12px;
+    --border-radius-top: 12px 12px 0 0;
     /* Typsnitt */
     --font-standard: "Nunito", sans-serif;
     --font-logo: "Comfortaa", sans-serif;
@@ -70,6 +74,29 @@
     --btn-hover-text-color: var(--white-100);
     --btn-hover-border-color: var(--white-100);
     --btn-hover-background-color: var(--blue-dark);
+    /* Knappar - account */
+    --btn-account-text-color: var(--dark-400);
+    --btn-account-border-color: var(--white-100);
+    --btn-account-background-color: var(--transparent);
+    /* Knappar - notification */
+    --btn-notification-text-color: var(--dark-400);
+    --btn-notification-text-hover-color: var(--dark-400);
+    --btn-notification-background-color: var(--transparent);
+    --btn-notification-background-hover-color: var(--blue-light-opacity);
+    /* Knappar - external */
+    --btn-external-text-color: var(--dark-400);
+    --btn-external-border-color: var(--white-200);
+    --btn-external-background-color: var(--white-200);
+    --btn-external-hover-text-color: var(--dark-400);
+    --btn-external-hover-border-color: var(--blue-light-opacity);
+    --btn-external-hover-background-color: var(--blue-light-opacity);
+    /* Knappar - close */
+    --btn-close-text-color: var(--dark-400);
+    --btn-close-border-color: var(--transparent);
+    --btn-close-background-color: var(--transparent);
+    --btn-close-text-hover-color: var(--dark-400);
+    --btn-close-border-hover-color: var(--transparent);
+    --btn-close-background-hover-color: var(--blue-light-opacity);
     /* Länkar */
     --link-color: var(--blue);
     --link-hover-color: var(--blue-dark);
@@ -437,6 +464,80 @@ aside .btn-close {
     }
 
 /* ============================= */
+/*           Badges              */
+/* ============================= */
+
+
+.badge {
+    border-radius: var(--border-radius);
+    padding: 0.5rem 1rem;
+    font-size: 0.9em;
+    font-weight: 400;
+    font-style: normal;
+    font-family: var(--font-standard);
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+    .badge.badge-red {
+        background-color: var(--badge-red-background-color);
+        border: 1px solid var(--badge-red-border-color);
+        color: var(--badge-red-text-color);
+    }
+
+    .badge.badge-normal {
+        background-color: var(--badge-normal-background-color);
+        border: 1px solid var(--badge-normal-border-color);
+        color: var(--badge-normal-text-color);
+    }
+
+    .badge.badge-warning {
+        background-color: var(--badge-warning-background-color);
+        border: 1px solid var(--badge-warning-border-color);
+        color: var(--badge-warning-text-color);
+    }
+
+    .badge.badge-danger {
+        background-color: var(--badge-danger-background-color);
+        border: 1px solid var(--badge-danger-border-color);
+        color: var(--badge-danger-text-color);
+    }
+
+/* ============================= */
+/*           Dividers           */
+/* ============================= */
+
+.divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--divider-color);
+    }
+
+    .divider:not(:empty)::before {
+        margin-right: 1rem;
+    }
+
+    .divider:not(:empty)::after {
+        margin-left: 1rem;
+    }
+
+    .divider span {
+        font-size: 0.8em;
+        text-transform: uppercase;
+        color: var(--text-muted-semilight-color);
+    }
+
+
+/* ============================= */
 /*           Knappar           */
 /* ============================= */
 .btn {
@@ -511,6 +612,53 @@ aside .btn-close {
         color: var(--text-muted-color);
     }
 
+.btn-external {
+    transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    background-color: var(--btn-external-background-color);
+    border: 1px solid var(--btn-external-border-color);
+    color: var(--btn-external-text-color);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: normal;
+    font-family: var(--font-standard);
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    display: grid;
+    align-items: center;
+    grid-template-columns: auto 1fr;
+    cursor: pointer;
+}
+
+    .btn-external:hover {
+        background-color: var(--btn-external-hover-background-color);
+        border: 1px solid var(--btn-external-hover-border-color);
+        color: var(--btn-external-hover-text-color);
+    }
+
+.btn-account {
+    transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    background-color: var(--btn-account-background-color);
+    border: 2px solid var(--btn-account-border-color);
+    color: var(--btn-account-text-color);
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+    .btn-account img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+    }
+
 
 .btn-notification {
     position: relative;
@@ -539,11 +687,29 @@ aside .btn-close {
         top: 10px;
     }
 
+.btn-action {
+    transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    background-color: var(--btn-close-background-color);
+    border: 1px solid var(--btn-close-border-color);
+    color: var(--btn-close-text-color);
+    z-index: 999;
+    font-size: 1.4rem;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-
-
-
-
+    .btn-action:hover {
+        background-color: var(--btn-close-background-hover-color);
+        border: 1px solid var(--btn-close-border-hover-color);
+        color: var(--btn-close-text-hover-color);
+        text-decoration: none;
+    }
 
 /* ============================= */
 /*      Navigationslänkar        */
@@ -648,6 +814,14 @@ form {
         gap: 0.2rem;
         margin-bottom: 1.2rem;
         text-align: left;
+    }
+
+    form .form-horizontal-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        gap: 1rem;
+        position: relative;
     }
 
     form .field-group {
@@ -943,11 +1117,47 @@ input:checked + .slider {
     }
 
 
+.dropdown {
+    display: none;
+}
+
+.dropdown.show {
+    display: block;
+}
+
 .dropdown-divider {
     height: 1px;
     background-color: var(--border-color);
     margin: 5px 0;
 }
+
+.dropdown .dropdown-actions {
+    display: grid;
+    gap: 0.5rem;
+}
+
+    .dropdown .dropdown-actions .dropdown-action {
+        transition: background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, color 0.1s ease-in-out;
+        background-color: var(--navlink-background-color);
+        border: 1px solid var(--navlink-border-color);
+        color: var(--navlink-text-color);
+        border-radius: var(--border-radius);
+        text-decoration: none;
+        padding: 1rem 1.5rem;
+        font-size: 1em;
+        font-family: var(--font-standard);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+    }
+
+        .dropdown .dropdown-actions .dropdown-action:hover {
+            background-color: var(--navlink-background-hover-color);
+            border-color: var(--navlink-border-hover-color);
+            color: var(--navlink-text-hover-color);
+            text-decoration: none;
+        }
 
 
 .account-dropdown-container {
@@ -1285,3 +1495,125 @@ input:checked + .slider {
     padding: 0.3rem 0.6rem;
     font-size: 0.9em;
 }
+
+#addProjectModal .card,
+#editProjectModal .card {
+    width: 550px;
+    margin-bottom: 1rem;
+}
+
+#addProjectModal .btn,
+#editProjectModal .btn {
+    margin-top: 2rem;
+}
+
+#projects {
+    display: grid;
+    gap: 3rem;
+}
+
+    #projects .project-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+
+    #projects .project.card .card-header {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-template-areas: "img name action" "img client na";
+        align-items: center;
+        column-gap: 1rem;
+    }
+
+        #projects .project.card .card-header .project-image {
+            grid-area: img;
+            width: 56px;
+            height: 56px;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+        }
+
+            #projects .project.card .card-header .project-image img {
+                width: 56px;
+                height: 56px;
+                object-fit: contain;
+            }
+
+        #projects .project.card .card-header .project-name {
+            grid-area: name;
+        }
+
+        #projects .project.card .card-header .client-name {
+            grid-area: client;
+            color: var(--text-muted-color);
+        }
+
+        #projects .project.card .card-header .project-actions {
+            grid-area: action;
+        }
+
+    #projects .project #project-actions-container {
+        position: relative;
+    }
+
+    #projects .project .dropdown {
+        box-shadow: 0 0 5px 2px rgba(137, 137, 137, 0.1);
+        width: 220px;
+    }
+
+    #projects .project .card-body {
+        margin: 0.5rem;
+        min-height: 100px;
+    }
+
+    #projects .project .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+        #projects .project .card-footer .members {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+            #projects .project .card-footer .members .user-image {
+                grid-area: img;
+                width: 30px;
+                height: 30px;
+                overflow: hidden;
+                border-radius: var(--border-radius);
+            }
+
+                #projects .project .card-footer .members .user-image img {
+                    width: 30px;
+                    height: 30px;
+                    object-fit: contain;
+                }
+
+/* Miscellaneous */
+.remove {
+    color: var(--red) !important;
+}
+
+.member {
+    width: 300px;
+    text-align: center;
+    display: grid;
+    grid-template-rows: auto auto auto auto auto 1fr;
+}
+
+    .member .name {
+        margin-bottom: 0.5rem;
+    }
+
+    .member .jobtitle {
+        background-color: var(--white-300);
+        padding: 0.5rem 1rem;
+        border-radius: 10px;
+        display: inline-block;
+        margin-bottom: 2rem;
+    }

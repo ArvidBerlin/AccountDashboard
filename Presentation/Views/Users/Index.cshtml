@@ -1,10 +1,71 @@
-﻿@{
+﻿@model UsersViewModel
+@{
     ViewData["Title"] = "Members";
 }
 
-<section id="members">
+<partial name="Partials/User/_AddUserModal" model="Model.AddUserViewModel" />
+<partial name="Partials/User/_EditUserModal" model="Model.EditUserViewModel" />
+
+<section id="users">
     <div class="section-header">
         <h1>@ViewData["Title"]</h1>
-        <button type="button" data-type="modal" data-target="#addMemberModal" class="btn btn-add"><span>Add Member</span></button>
+        <button type="button" data-type="modal" data-target="#addUserModal" class="btn btn-add">
+            <span>Add Member</span>
+        </button>
+    </div>
+
+    <div class="project-list">
+        @if (Model.Users != null && Model.Users.Any())
+        {
+            @foreach (var user in Model.Users)
+            {
+                <partial name="Partials/ListItems/_UserListItem" model="user" />
+            }
+        }
     </div>
 </section>
+
+<script src="~/js/validate.js"></script>
+<script>
+    document.querySelector("#addUserModal form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const response = await fetch("/Users/Add", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            location.reload();
+        } else {
+            showValidationErrors(result.errors);
+        }
+    });
+
+    document.querySelector("editUserModal form").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const response = await fetch("/Users/Update", {
+            method: "POST",
+            body: formData
+        });
+
+        const result =await response.json();
+
+        if (result.success) {
+            location.reload();
+        } else {
+            showValidationErrors(result.errors);
+        }
+    });
+
+</script>
+

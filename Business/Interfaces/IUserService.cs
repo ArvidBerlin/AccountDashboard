@@ -12,4 +12,5 @@ public interface IUserService
     Task<UserResult<IEnumerable<User>>> GetUsersAsync();
     Task<UserResult<User>> GetUserByIdAsync(string id);
     Task<UserResult> UserExistsByEmailAsync(string email);
+    Task<UserResult> CreateMemberAsync(AddUserFormData formData);
 }

@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
     var displayName = await userService.GetDisplayName(userId);
 

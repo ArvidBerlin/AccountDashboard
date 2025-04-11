@@ -28,9 +28,22 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
         if (formData == null)
             return new ProjectResult { Succeeded = false, StatusCode = 400, Error = "Not all required fields are supplied." };
 
-        var projectEntity = formData.MapTo<ProjectEntity>();
         var statusResult = await _statusService.GetStatusByIdAsync(1);
         var status = statusResult.Result;
+
+        var projectEntity = new ProjectEntity
+        {
+            Id = Guid.NewGuid().ToString(),
+            ProjectName = formData.ProjectName,
+            Description = formData.Description,
+            StartDate = formData.StartDate,
+            EndDate = formData.EndDate,
+            Budget = formData.Budget,
+            ClientId = formData.ClientId,
+            UserId = formData.UserId,
+            StatusId = status!.Id,
+            Created = DateTime.Now
+        };
 
         projectEntity.StatusId = status!.Id;
 
@@ -108,13 +121,20 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
 
     public async Task<ProjectResult> DeleteProjectAsync(string id)
     {
-        var projectResponse = await _projectRepository.GetAsync(x => x.Id == id);
-        if (!projectResponse.Succeeded)
-            return new ProjectResult { Succeeded = false, StatusCode = 404, Error = $"Project '{id}' was not found." };
+        var projectEntityResponse = await _projectRepository.GetEntityAsync(x => x.Id == id);
 
-        var project = projectResponse.Result!.MapTo<ProjectEntity>();
+        if (!projectEntityResponse.Succeeded || projectEntityResponse.Result == null)
+        {
+            return new ProjectResult
+            {
+                Succeeded = false,
+                StatusCode = 404,
+                Error = $"Project '{id}' was not found."
+            };
+        }
 
-        var deleteResult = await _projectRepository.DeleteAsync(project);
+        var deleteResult = await _projectRepository.DeleteAsync(projectEntityResponse.Result);
+
         return deleteResult.Succeeded
             ? new ProjectResult { Succeeded = true, StatusCode = 200 }
             : new ProjectResult { Succeeded = false, StatusCode = deleteResult.StatusCode, Error = deleteResult.Error };

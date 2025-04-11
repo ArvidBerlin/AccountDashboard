@@ -14,7 +14,7 @@ public class AddProjectViewModel
     [Display(Name = "Project Name", Prompt = "Enter project name")]
     public string ProjectName { get; set; } = null!;
 
-    [DataType(DataType.Text)]
+    [DataType(DataType.MultilineText)]
     [Display(Name = "Description", Prompt = "Type something")]
     public string? Description { get; set; }
 
@@ -34,8 +34,9 @@ public class AddProjectViewModel
     [Display(Name = "Client", Prompt = "Select client")]
     public string ClientId { get; set; } = null!;
 
-    [Display(Name = "Members", Prompt = "Search for members")]
-    public string? UserIds { get; set; }
+    [Display(Name = "Members", Prompt = "Select member")]
+    public string? UserId { get; set; }
 
     public IEnumerable<SelectListItem> Clients { get; set; } = [];
+    public IEnumerable<SelectListItem> Users { get; set; } = [];
 }

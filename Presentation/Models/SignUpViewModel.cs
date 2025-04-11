@@ -32,6 +32,7 @@ public class SignUpViewModel
     [DataType(DataType.Password)]
     public string ConfirmPassword { get; set; } = null!;
 
+    [Required(ErrorMessage = "is required.")]
     [Range(typeof(bool), "true", "true")]
     public bool TermsAndConditions { get; set; }
 }

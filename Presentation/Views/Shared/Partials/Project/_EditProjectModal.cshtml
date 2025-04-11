@@ -3,16 +3,21 @@
 <div id="editProjectModal" class="modal">
     <div class="card">
         <div class="card-header">
-            <h3>Add Project</h3>
+            <h3>Edit Project</h3>
             <button type="button" class="btn-close" data-type="close" data-close="true" data-target="#editProjectModal"></button>
         </div>
         <div class="card-body">
-            <form asp-controller="Project" asp-action="Edit" method="post" enctype="multipart/form-data" novalidate>
+            <form id="editProjectModal" asp-controller="Projects" asp-action="Update" method="post" enctype="multipart/form-data" novalidate>
+                <input type="hidden" asp-for="Id" /> 
                 <div class="form-group">
                     <label asp-for="ProjectName"></label>
                     <input asp-for="ProjectName" />
                 </div>
 
+                <div class="form-group">
+                    <label asp-for="ClientId"></label>
+                    <select asp-for="ClientId" asp-items="Model.Clients"></select>
+                </div>
 
                 <div class="form-group">
                     <label asp-for="Description"></label>
@@ -41,6 +46,21 @@
                     </div>
                 </div>
 
+                <div class="form-horizontal-group">
+                    <div class="form-group">
+                        <label asp-for="StartDate" class="form-label"></label>
+                        <input asp-for="StartDate" class="form-input" type="date" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EndDate" class="form-label"></label>
+                        <input asp-for="EndDate" class="form-input" type="date" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserId"></label>
+                    <select asp-for="UserId" asp-items="Model.Users"></select>
+                </div>
 
                 <div class="form-group">
                     <button type="submit" class="btn btn-submit">Save</button>

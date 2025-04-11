@@ -28,7 +28,7 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
         {
             _table.Add(entity);
             await _context.SaveChangesAsync();
-            return new RepositoryResult<bool> { Succeeded = true, StatusCode = 201 };
+            return new RepositoryResult<bool> { Succeeded = true, StatusCode = 201, Result = true };
         }
         catch (Exception ex)
         {
@@ -141,5 +141,27 @@ public abstract class BaseRepository<TEntity, TModel> : IBaseRepository<TEntity,
             Debug.WriteLine(ex.Message);
             return new RepositoryResult<bool> { Succeeded = false, StatusCode = 500, Error = ex.Message };
         }
+    }
+
+    public async Task<RepositoryResult<TEntity>> GetEntityAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        var entity = await _table.FirstOrDefaultAsync(predicate);
+
+        if (entity == null)
+        {
+            return new RepositoryResult<TEntity>
+            {
+                Succeeded = false,
+                StatusCode = 404,
+                Error = "Entity not found."
+            };
+        }
+
+        return new RepositoryResult<TEntity>
+        {
+            Succeeded = true,
+            StatusCode = 200,
+            Result = entity
+        };
     }
 }
