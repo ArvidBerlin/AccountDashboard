@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presentation.Models;
+using System.Threading.Tasks;
 
 namespace Presentation.Controllers;
 
@@ -16,9 +17,30 @@ public class UsersController(IUserService userService, AppDbContext context) : C
     private readonly AppDbContext _context = context;
 
     [Route("admin/members")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var viewModel = new UsersViewModel();
+        var userResult = await _userService.GetUsersAsync();
+        var users = userResult.Result;
+
+        var userViewModels = users!.Select(u => new UserViewModel
+        {
+            Id = u.Id,
+            UserImage = u.Image ?? "",
+            FirstName = u.FirstName ?? "",
+            LastName = u.LastName ?? "",
+            JobTitle = u.JobTitle ?? "",
+            Email = u.Email ?? "",
+            PhoneNumber = u.PhoneNumber ?? "",
+            Message = ""
+        });
+
+        var viewModel = new UsersViewModel
+        {
+            Users = userViewModels,
+            AddUserViewModel = new AddUserViewModel(),
+            EditUserViewModel = new EditUserViewModel()
+        };
+
         return View(viewModel);
     }
 
@@ -42,6 +64,28 @@ public class UsersController(IUserService userService, AppDbContext context) : C
             return Json(new { success = true });
 
         return Json(new { success = false, message = result?.Error });
+    }
+
+    public async Task<IActionResult> Update(string id)
+    {
+        var userResult = await _userService.GetUserByIdAsync(id);
+        if (!userResult.Succeeded || userResult.Result == null)
+            return NotFound();
+
+        var user = userResult.Result;
+
+        var viewModel = new EditUserViewModel
+        {
+            Id = user.Id,
+            ImageUrl = user.Image,
+            FirstName = user.FirstName!,
+            LastName = user.LastName!,
+            Email = user.Email,
+            PhoneNumber = user.PhoneNumber!,
+            JobTitle = user.JobTitle!
+        };
+
+        return PartialView("~/Views/Shared/Partials/User/_EditUserModal.cshtml", viewModel);
     }
 
     [HttpGet]

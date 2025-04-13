@@ -10,6 +10,16 @@
             <form id="editProjectModal" asp-controller="Projects" asp-action="Update" method="post" enctype="multipart/form-data" novalidate>
                 <input type="hidden" asp-for="Id" /> 
                 <div class="form-group">
+                    <div class="image-preview-container project-image" data-file-upload>
+                        <img class="hide" />
+                        <div class="circle circle-gray">
+                            <i class="fa-duotone fa-solid fa-camera"></i>
+                        </div>
+                        <input type="file" accept="image/*" hidden />
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label asp-for="ProjectName"></label>
                     <input asp-for="ProjectName" />
                 </div>

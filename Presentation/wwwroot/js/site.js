@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateRelativeTimes();
     setInterval(updateRelativeTimes, 60000);
+    initFileUploads();
 })
 
 function initMobileMenu() {
@@ -136,6 +137,33 @@ function updateRelativeTimes() {
         }
         el.textContent = relativeTime;
     });
+}
+
+function initFileUploads() {
+    document.querySelectorAll('[data-file-upload]').forEach(container => {
+        const input = container.querySelector('input[type="file"]')
+        const preview = container.querySelector('img')
+        const iconContainer = container.querySelector('.circle')
+        const icon = iconContainer?.querySelector('i')
+
+        container.addEventListener('click', () => {
+            input?.click()
+        })
+
+        input?.addEventListener('change', e => {
+            const file = e.target.files[0]
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader()
+                reader.onload = () => {
+                    preview.src = reader.result
+                    preview.classList.remove('hide')
+                    iconContainer.classList.add('selected')
+                    icon.classList.replace('fa-camera', 'fa-pen-to-square')
+                }
+                reader.readAsDataURL(file)
+            }
+        })
+    })
 }
 
 $(document).ready(function() {

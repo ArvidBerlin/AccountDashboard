@@ -5,10 +5,8 @@
 		<div class="project-image">
 			@if (!string.IsNullOrEmpty(Model.ProjectImage))
 			{
-				<img src="https://cms24asp1.blob.core.windows.net/uploads/@Model.ProjectImage" />
-
+				<img src="/images/uploads/@Model.ProjectImage" alt="template project" />
 				@* <img src="https://cms24asp1.blob.core.windows.net/uploads/@Model.ProjectImage" alt="template project" /> *@
-				@* <img src="/images/uploads/@Model.ImageFileName" alt="template project" /> *@
 			}
 			else
 			{

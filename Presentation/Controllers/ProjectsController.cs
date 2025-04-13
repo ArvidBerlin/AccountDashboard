@@ -159,6 +159,7 @@ public class ProjectsController(IProjectService projectService, IClientService c
                 projectViewModels = projectResult.Result.Select(project => new ProjectViewModel
                 {
                     Id = project.Id,
+                    ProjectImage = project.Image!,
                     ProjectName = project.ProjectName,
                     Description = project.Description!,
                     ClientName = project.Client?.ClientName ?? "Unknown"

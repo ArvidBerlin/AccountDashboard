@@ -15,14 +15,6 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
     private readonly ILocalImageHandler _imageHandler = imageHandler;
 
 
-    /* 
-     Skriv in ImageHandler nånstans inuti CreateProjectAsync:
-     
-     var imageFileName = await _imageHandler.SaveProjectImageAsync(formData.Image!);
-
-    */
-
-
     public async Task<ProjectResult> CreateProjectAsync(AddProjectFormData formData)
     {
         if (formData == null)
@@ -44,6 +36,9 @@ public class ProjectService(IProjectRepository projectRepository, IStatusService
             StatusId = status!.Id,
             Created = DateTime.Now
         };
+
+        var imageFileName = await _imageHandler.SaveProjectImageAsync(formData.Image!);
+        projectEntity.Image = imageFileName;
 
         projectEntity.StatusId = status!.Id;
 

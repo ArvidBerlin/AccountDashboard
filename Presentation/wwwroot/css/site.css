@@ -1617,3 +1617,39 @@ input:checked + .slider {
         display: inline-block;
         margin-bottom: 2rem;
     }
+
+/* Image Previewer */
+.image-preview-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--border-color);
+    margin: auto;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+    .image-preview-container.project-image {
+        border-radius: var(--border-radius);
+        overflow: hidden;
+    }
+
+    .image-preview-container.user-image {
+        border-radius: 50%;
+        overflow: hidden;
+    }
+
+    .image-preview-container .circle {
+        position: absolute;
+    }
+
+        .image-preview-container .circle.selected {
+            bottom: 3%;
+        }
+
+#image-upload {
+    display: none;
+}

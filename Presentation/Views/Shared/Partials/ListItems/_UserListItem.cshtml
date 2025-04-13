@@ -14,24 +14,6 @@
 								<i class="fa-duotone fa-solid fa-pen-to-square"></i>
 								<span>Edit</span>
 							</button>
-							<button class="dropdown-action" href="#">
-								<i class="fa-duotone fa-solid fa-user-plus" style="--fa-primary-opacity: 0.4; --fa-secondary-opacity: 1;"></i>
-								<span>Add Member</span>
-							</button>
-						</nav>
-						<div class="dropdown-divider"></div>
-						<nav class="dropdown-actions">
-							<a class="dropdown-action remove">
-
-								<form asp-controller="Projects" asp-action="Delete" method="post">
-									<input type="hidden" name="id" value="@Model.Id" />
-									<button type="submit" class="btn btn-close">
-										<i class="fa-duotone fa-solid fa-trash"></i>
-										<span>Delete Project</span>
-									</button>
-								</form>
-
-							</a>
 						</nav>
 					</div>
 				</div>

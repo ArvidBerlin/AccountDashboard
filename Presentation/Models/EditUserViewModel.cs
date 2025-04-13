@@ -10,6 +10,7 @@ public class EditUserViewModel
     [DataType(DataType.Upload)]
     [Display(Name = "Member Image", Prompt = "Select member image")]
     public IFormFile? Image { get; set; }
+    public string? ImageUrl { get; set; }
 
     [Required]
     [DataType(DataType.Text)]
