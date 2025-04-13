@@ -19,6 +19,7 @@ public class UsersController(IUserService userService, AppDbContext context) : C
     [Route("admin/members")]
     public async Task<IActionResult> Index()
     {
+        // Hjälp från ChatGPT att skriva ut members
         var userResult = await _userService.GetUsersAsync();
         var users = userResult.Result;
 

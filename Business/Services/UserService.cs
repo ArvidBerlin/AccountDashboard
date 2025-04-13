@@ -10,11 +10,12 @@ using System.Diagnostics;
 
 namespace Business.Services;
 
-public class UserService(IUserRepository userRepository, UserManager<UserEntity> userManager, RoleManager<IdentityRole> roleManager) : IUserService
+public class UserService(IUserRepository userRepository, UserManager<UserEntity> userManager, RoleManager<IdentityRole> roleManager, ILocalImageHandler imageHandler) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
+    private readonly ILocalImageHandler _imageHandler = imageHandler;
 
     public async Task<UserResult<IEnumerable<User>>> GetUsersAsync()
     {
@@ -109,6 +110,8 @@ public class UserService(IUserRepository userRepository, UserManager<UserEntity>
         try
         {
             var userEntity = formData.MapTo<UserEntity>();
+            var imageFileName = await _imageHandler.SaveProjectImageAsync(formData.Image!);
+            userEntity.Image = imageFileName;
             userEntity.UserName = userEntity.Email;
             var result = await _userManager.CreateAsync(userEntity);
             if (result.Succeeded)

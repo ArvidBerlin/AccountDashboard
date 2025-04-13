@@ -1599,6 +1599,14 @@ input:checked + .slider {
     color: var(--red) !important;
 }
 
+/* Members */
+
+.members {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 3rem;
+}
+
 .member {
     width: 300px;
     text-align: center;

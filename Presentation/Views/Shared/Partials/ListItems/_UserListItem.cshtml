@@ -22,14 +22,16 @@
 		<div class="image">
 			@if (!string.IsNullOrEmpty(Model.UserImage))
 			{
-				<img src="https://cms24asp1.blob.core.windows.net/uploads/@Model.UserImage" />
+				<img src="/images/uploads/@Model.UserImage" alt="template user" />
+
+				@* <img src="https://cms24asp1.blob.core.windows.net/uploads/@Model.UserImage" /> *@
 
 				@* <img src="https://cms24asp1.blob.core.windows.net/uploads/@Model.UserImage" alt="template user" /> *@
 				@* <img src="/images/uploads/@Model.ImageFileName" alt="template user" /> *@
 			}
 			else
 			{
-				<img src="~/images/profiles/user-template-male-greenpink.svg" alt="template user" />
+				<img src="/images/profiles/user-template-male-greenpink.svg" alt="template user" />
 			}
 		</div>
 		<h4 class="name">@Model.FirstName @Model.LastName</h4>

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Presentation.Controllers;
 
-[Authorize(Roles = "Admin")] 
+[Authorize] 
 public class ClientsController : Controller
 {
     [Route("admin/clients")]
