@@ -14,17 +14,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
-//builder.Services.AddScoped<IImageHandler, ImageHandler>();  -- Behövs möjligen inte
+
 //if (builder.Environment.IsDevelopment())
 //{
 //    var localPath = Path.Combine(builder.Environment.WebRootPath, "images", "uploads");
-//    builder.Services.AddScoped<ILocalImageHandler>(_ => new LocalImageHandler(localPath));
+//    builder.Services.AddScoped<IImageHandler>(_ => new LocalImageHandler(localPath));
 //}
 //else
 //{
-//    builder.Services.AddScoped<IAzureImageHandler, AzureImageHandler>();
+//    builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
 //}
-builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
+//builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
 builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
 {
@@ -73,6 +73,6 @@ app.MapControllerRoute(
     pattern: "{controller=Overview}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapHub<NotificationHub>("/notificationHub");
+//app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

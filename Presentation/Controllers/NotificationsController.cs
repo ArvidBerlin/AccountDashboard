@@ -13,14 +13,14 @@ public class NotificationsController(IHubContext<NotificationHub> notificationHh
     private readonly IHubContext<NotificationHub> _notificationHhub = notificationHhub;
     private readonly INotificationService _notificationService = notificationService;
 
-    [HttpPost("dismiss/{id}")]
-    public async Task<IActionResult> DismissNotification(string id)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
-        if (string.IsNullOrEmpty(userId))
-            return Unauthorized();
+    //[HttpPost("dismiss/{id}")]
+    //public async Task<IActionResult> DismissNotification(string id)
+    //{
+    //    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "anonymous";
+    //    if (string.IsNullOrEmpty(userId))
+    //        return Unauthorized();
 
-        await _notificationService.DismissNotificationsAsync(id, userId);
-        return Ok(new { success = true });
-    }
+    //    await _notificationService.DismissNotificationsAsync(id, userId);
+    //    return Ok(new { success = true });
+    //}
 }
