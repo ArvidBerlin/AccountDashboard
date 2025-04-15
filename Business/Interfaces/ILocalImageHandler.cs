@@ -2,7 +2,6 @@
 
 namespace Business.Interfaces;
 
-public interface ILocalImageHandler
+public interface ILocalImageHandler : IImageHandler
 {
-    Task<string?> SaveProjectImageAsync(IFormFile file);
 }

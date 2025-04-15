@@ -16,8 +16,15 @@ public class AzureImageHandler : IAzureImageHandler
         var connectionString = _configuration["AzureStorageAccount:ConnectionString"];
         var containerName = _configuration["AzureStorageAccount:ContainerName"];
 
-        _containerClient = new BlobContainerClient(connectionString, containerName);
-        _containerClient.CreateIfNotExists();
+        try
+        {
+            _containerClient = new BlobContainerClient(connectionString, containerName);
+            _containerClient.CreateIfNotExists();
+        }
+        catch
+        {
+            _containerClient = null!;
+        }
     }
 
     public async Task<string?> SaveProjectImageAsync(IFormFile file)

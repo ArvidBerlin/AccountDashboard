@@ -2,7 +2,6 @@
 
 namespace Business.Interfaces;
 
-public interface IAzureImageHandler
+public interface IAzureImageHandler : IImageHandler
 {
-    Task<string?> SaveProjectImageAsync(IFormFile file);
 }

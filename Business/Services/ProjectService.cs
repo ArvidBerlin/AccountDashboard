@@ -8,11 +8,11 @@ using Domain.Responses;
 
 namespace Business.Services;
 
-public class ProjectService(IProjectRepository projectRepository, IStatusService statusService, ILocalImageHandler imageHandler) : IProjectService
+public class ProjectService(IProjectRepository projectRepository, IStatusService statusService, IImageHandler imageHandler) : IProjectService
 {
     private readonly IProjectRepository _projectRepository = projectRepository;
     private readonly IStatusService _statusService = statusService;
-    private readonly ILocalImageHandler _imageHandler = imageHandler;
+    private readonly IImageHandler _imageHandler = imageHandler;
 
 
     public async Task<ProjectResult> CreateProjectAsync(AddProjectFormData formData)

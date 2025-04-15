@@ -10,12 +10,12 @@ using System.Diagnostics;
 
 namespace Business.Services;
 
-public class UserService(IUserRepository userRepository, UserManager<UserEntity> userManager, RoleManager<IdentityRole> roleManager, ILocalImageHandler imageHandler) : IUserService
+public class UserService(IUserRepository userRepository, UserManager<UserEntity> userManager, RoleManager<IdentityRole> roleManager, IImageHandler imageHandler) : IUserService
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly UserManager<UserEntity> _userManager = userManager;
     private readonly RoleManager<IdentityRole> _roleManager = roleManager;
-    private readonly ILocalImageHandler _imageHandler = imageHandler;
+    private readonly IImageHandler _imageHandler = imageHandler;
 
     public async Task<UserResult<IEnumerable<User>>> GetUsersAsync()
     {
