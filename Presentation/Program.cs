@@ -24,7 +24,7 @@ builder.Services.AddSignalR();
 //{
 //    builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
 //}
-//builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
+builder.Services.AddScoped<IImageHandler, AzureImageHandler>();
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("LocalDB")));
 builder.Services.AddIdentity<UserEntity, IdentityRole>(x =>
 {
@@ -73,6 +73,6 @@ app.MapControllerRoute(
     pattern: "{controller=Overview}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-//app.MapHub<NotificationHub>("/notificationHub");
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();

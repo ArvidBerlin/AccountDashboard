@@ -13,88 +13,88 @@ public class AuthController(IAuthService authService, INotificationService notif
     private readonly INotificationService _notificationService = notificationService;
     private readonly IUserService _userService = userService;
 
-    //[Route("auth/signup")]
-    //public IActionResult SignUp(string returnUrl = "~/")
-    //{
-    //    ViewBag.ReturnUrl = returnUrl;
-    //    ViewBag.ErrorMessage = "";
+    [Route("auth/signup")]
+    public IActionResult SignUp(string returnUrl = "~/")
+    {
+        ViewBag.ReturnUrl = returnUrl;
+        ViewBag.ErrorMessage = "";
 
-    //    return View();
-    //}
+        return View();
+    }
 
-    //[HttpPost]
-    //[Route("auth/signup")]
-    //public async Task<IActionResult> SignUp(SignUpViewModel viewModel, string returnUrl = "~/")
-    //{
-    //    if (!ModelState.IsValid)
-    //    {
-    //        ViewBag.ReturnUrl = returnUrl;
-    //        ViewBag.ErrorMessage = "";
-    //        return View(viewModel);
-    //    }
-            
-    //    var signUpFormData = viewModel.MapTo<SignUpFormData>();
-    //    var result = await _authService.SignUpAsync(signUpFormData);
-    //    if (result.Succeeded)
-    //    {
-    //        return LocalRedirect(returnUrl);
-    //    }
+    [HttpPost]
+    [Route("auth/signup")]
+    public async Task<IActionResult> SignUp(SignUpViewModel viewModel, string returnUrl = "~/")
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ErrorMessage = "";
+            return View(viewModel);
+        }
 
-    //    ViewBag.ReturnUrl = returnUrl;
-    //    ViewBag.ErrorMessage = result.Error;
-    //    return View(viewModel);
-    //}
+        var signUpFormData = viewModel.MapTo<SignUpFormData>();
+        var result = await _authService.SignUpAsync(signUpFormData);
+        if (result.Succeeded)
+        {
+            return LocalRedirect(returnUrl);
+        }
 
-    //[Route("auth/signin")]
-    //public IActionResult SignIn(string returnUrl = "~/")
-    //{
-    //    ViewBag.ReturnUrl = returnUrl;
-    //    ViewBag.ErrorMessage = "";
+        ViewBag.ReturnUrl = returnUrl;
+        ViewBag.ErrorMessage = result.Error;
+        return View(viewModel);
+    }
 
-    //    return View();
-    //}
+    [Route("auth/signin")]
+    public IActionResult SignIn(string returnUrl = "~/")
+    {
+        ViewBag.ReturnUrl = returnUrl;
+        ViewBag.ErrorMessage = "";
 
-    //[HttpPost]
-    //[Route("auth/signin")]
-    //public async Task<IActionResult> SignIn(SignInViewModel viewModel, string returnUrl = "~/")
-    //{
-    //    if (ModelState.IsValid)
-    //    {
-    //        var signInFormData = viewModel.MapTo<SignInFormData>();
-    //        var authResult = await _authService.SignInAsync(signInFormData);
+        return View();
+    }
 
-    //        if (authResult.Succeeded)
-    //        {
-    //            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-    //            var userResult = await _userService.GetUserByIdAsync(userId!);
-    //            var user = userResult.Result;
+    [HttpPost]
+    [Route("auth/signin")]
+    public async Task<IActionResult> SignIn(SignInViewModel viewModel, string returnUrl = "~/")
+    {
+        if (ModelState.IsValid)
+        {
+            var signInFormData = viewModel.MapTo<SignInFormData>();
+            var authResult = await _authService.SignInAsync(signInFormData);
 
-    //            if (user != null)
-    //            {
-    //                var notificationFormData = new NotificationFormData
-    //                {
-    //                    NotificationTypeId = 1,
-    //                    NotificationTargetId = 1,
-    //                    Message = $"{user.FirstName} {user.LastName} signed in.",
-    //                    Image = user.Image
-    //                };
+            if (authResult.Succeeded)
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var userResult = await _userService.GetUserByIdAsync(userId!);
+                var user = userResult.Result;
 
-    //                await _notificationService.AddNotificationAsync(notificationFormData);
-    //            }
+                if (user != null)
+                {
+                    var notificationFormData = new NotificationFormData
+                    {
+                        NotificationTypeId = 1,
+                        NotificationTargetId = 1,
+                        Message = $"{user.FirstName} {user.LastName} signed in.",
+                        Image = user.Image
+                    };
 
-    //            return LocalRedirect(returnUrl);
-    //        }
-    //    }
+                    await _notificationService.AddNotificationAsync(notificationFormData);
+                }
 
-    //    ViewBag.ReturnUrl = returnUrl;
-    //    ViewBag.ErrorMessage = "Unable to login. try another email or password.";
-    //    return View(viewModel);
-    //}
+                return LocalRedirect(returnUrl);
+            }
+        }
 
-    //[Route("auth/signout")]
-    //public new async Task<IActionResult> SignOut()
-    //{
-    //    await _authService.SignOutAsync();
-    //    return LocalRedirect("~/");
-    //}
+        ViewBag.ReturnUrl = returnUrl;
+        ViewBag.ErrorMessage = "Unable to login. try another email or password.";
+        return View(viewModel);
+    }
+
+    [Route("auth/signout")]
+    public new async Task<IActionResult> SignOut()
+    {
+        await _authService.SignOutAsync();
+        return LocalRedirect("~/");
+    }
 }
