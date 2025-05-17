@@ -12,7 +12,6 @@ Built with ASP.NET Core 9.0, following Clean Architecture principles and featuri
 - [Tech Stack](#tech-stack)  
 - [Architecture Overview](#architecture-overview)  
 - [Prerequisites](#prerequisites)  
-- [Project Structure](#project-structure)   
 
 ---
 
@@ -68,18 +67,3 @@ It aims for maintainability via Clean Architecture and a responsive UI powered b
 - SQL Server (LocalDB or full edition)  
 - Visual Studio 2022 or VS Code (with C# extension)  
 - (Optional) Azure subscription and Storage Account for Blob support
-
-## Project Structure 
-
-.
-├── .github/                     # GitHub Actions workflows
-├── Business/                    # Application services and image handlers
-├── Data/                        # EF Core context, entities, migrations, repos
-├── Domain/                      # Core models, DTOs, mapping extensions
-├── Hubs/                        # SignalR hub definitions
-├── Presentation/                # ASP.NET Core MVC project
-│   ├── Controllers/  
-│   ├── Views/  
-│   ├── wwwroot/                 # CSS, JS, images
-│   └── Program.cs  
-└── AccountDashboard.sln         # Visual Studio solution
